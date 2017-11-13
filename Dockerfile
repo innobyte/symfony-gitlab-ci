@@ -25,8 +25,13 @@ RUN apt-get update \
        && docker-php-ext-install zip \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get install -y \
+        wget ca-certificates \
+        --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+
 # Enable HTTP2 support
-# build nghttp2
+# build nghttp2 (https://hub.docker.com/r/norbertm/debian-curl-http2/)
 RUN apt-get update \
     && apt-get install -y \
         g++ make binutils autoconf automake autotools-dev libtool pkg-config \
@@ -34,7 +39,7 @@ RUN apt-get update \
         libjemalloc-dev cython python3-dev python-setuptools \
         --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
-RUN wget https://github.com/nghttp2/nghttp2/releases/download/v1.27.0/nghttp2-1.27.0.tar.gz \
+    && wget https://github.com/nghttp2/nghttp2/releases/download/v1.27.0/nghttp2-1.27.0.tar.gz \
     && tar -xvzf nghttp2-1.27.0.tar.gz \
     && cd nghttp2-1.27.0 \
     && autoreconf -i \
