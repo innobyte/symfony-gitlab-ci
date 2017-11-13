@@ -1,9 +1,13 @@
 FROM php:7.1
 MAINTAINER Alin Alexandru <alin.alexandru@innobyte.com>
 
-#RUN apt-get update \
-#   && apt-get install -y \
-#       git-core \
+RUN apt-get update \
+   && apt-get install -y \
+       git-core \
+    && apt-get install -y libgmp-dev \
+    && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/ \
+    && docker-php-ext-configure gmp \
+    && docker-php-ext-install gmp
 #   && docker-php-ext-install mbstring \
 #   && docker-php-ext-install pdo_mysql \
 #   && apt-get install -y libxml2-dev \
