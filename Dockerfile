@@ -89,7 +89,7 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' > /etc/apt/sou
         comerr-dev cpp cpp-4.9 debhelper diffstat dpkg-dev file g++ g++-4.9 gcc \
         gcc-4.9 gettext gettext-base groff-base init-system-helpers intltool-debian \
         krb5-multidev libasan1 libasprintf0c2 libatomic1 libbsd0 libcilkrts5 \
-        libcloog-isl4 libcroco3 libdpkg-perl libedit2 libexpat1 libgcc-4.9-dev \
+        libcloog-isl4 libcroco3 libdpkg-perl libexpat1 libgcc-4.9-dev \
         libgcrypt20-dev libgdbm3 libglib2.0-0 libgmp-dev libgmpxx4ldbl \
         libgnutls-openssl27 libgnutls28-dev libgnutlsxx28 libgomp1 libgpg-error-dev \
         libgssapi-krb5-2 libgssrpc4 libidn11-dev libisl10 libitm1 libk5crypto3 \
