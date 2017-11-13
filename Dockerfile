@@ -60,7 +60,7 @@ RUN apt-get update \
 # build nghttp2 (https://hub.docker.com/r/norbertm/debian-curl-http2/)
 RUN apt-get update \
     && apt-get install -y \
-        g++ make binutils autoconf automake autotools-dev libtool pkg-config \
+        wget g++ make binutils autoconf automake autotools-dev libtool pkg-config \
         zlib1g-dev libcunit1-dev libssl-dev libxml2-dev libev-dev libevent-dev libjansson-dev \
         libjemalloc-dev cython python3-dev python-setuptools \
         --no-install-recommends \
