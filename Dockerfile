@@ -122,27 +122,28 @@ RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
 RUN echo "date.timezone=UTC" > $PHP_INI_DIR/conf.d/date_timezone.ini
 
 # Install composer and put binary into $PATH
-RUN curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/ \
-    && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+#RUN curl -sS https://getcomposer.org/installer | php \
+#    && mv composer.phar /usr/local/bin/ \
+#    && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
 # Install phpunit and put binary into $PATH
-RUN curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit.phar \
-    && chmod 755 phpunit.phar \
-    && mv phpunit.phar /usr/local/bin/ \
-    && ln -s /usr/local/bin/phpunit.phar /usr/local/bin/phpunit
+#RUN curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit.phar \
+#    && chmod 755 phpunit.phar \
+#    && mv phpunit.phar /usr/local/bin/ \
+#    && ln -s /usr/local/bin/phpunit.phar /usr/local/bin/phpunit
 
 # Install PHP Code sniffer
-RUN curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar \
-    && chmod 755 phpcs.phar \
-    && mv phpcs.phar /usr/local/bin/ \
-    && ln -s /usr/local/bin/phpcs.phar /usr/local/bin/phpcs \
-    && curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar \
-    && chmod 755 phpcbf.phar \
-    && mv phpcbf.phar /usr/local/bin/ \
-    && ln -s /usr/local/bin/phpcbf.phar /usr/local/bin/phpcbf
+#RUN curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar \
+#    && chmod 755 phpcs.phar \
+#    && mv phpcs.phar /usr/local/bin/ \
+#    && ln -s /usr/local/bin/phpcs.phar /usr/local/bin/phpcs \
+#    && curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar \
+#    && chmod 755 phpcbf.phar \
+#    && mv phpcbf.phar /usr/local/bin/ \
+#    && ln -s /usr/local/bin/phpcbf.phar /usr/local/bin/phpcbf
     
 # Install deployer
-RUN curl -LO https://deployer.org/deployer.phar \
-    && mv deployer.phar /usr/local/bin/dep \
-    && chmod +x /usr/local/bin/dep
+RUN curl -LO https://deployer.org/deployer.phar
+#RUN curl -LO https://deployer.org/deployer.phar \
+#    && mv deployer.phar /usr/local/bin/dep \
+#    && chmod +x /usr/local/bin/dep
