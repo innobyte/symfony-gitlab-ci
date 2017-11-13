@@ -1,29 +1,60 @@
 FROM php:7.1
 MAINTAINER Alin Alexandru <alin.alexandru@innobyte.com>
 
+# From https://github.com/JayH5/docker-openssl
+# ensure local openssl is preferred over distribution openssl
+ENV PATH /usr/local/bin:$PATH
+
+ENV GPG_KEY 8657ABB260F056B1E5190839D9C4D26D0E604491
+ENV OPENSSL_VERSION 1.1.0d
+
+RUN set -x \
+    && buildDeps=' \
+        ca-certificates \
+        gcc \
+        libc6-dev \
+        make \
+        perl \
+        wget \
+    ' \
+    && apt-get update && apt-get install -y --no-install-recommends $buildDeps \
+    && rm -rf /var/lib/apt/lists/* \
+    \
+    && wget -O openssl.tar.gz "https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz" \
+    && wget -O openssl.tar.gz.asc "https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz.asc" \
+    && export GNUPGHOME="$(mktemp -d)" \
+    && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$GPG_KEY" \
+    && gpg --batch --verify openssl.tar.gz.asc openssl.tar.gz \
+    && rm -r "$GNUPGHOME" openssl.tar.gz.asc \
+    && mkdir -p /usr/src/openssl \
+    && tar -xzC /usr/src/openssl --strip-components=1 -f openssl.tar.gz \
+    && rm openssl.tar.gz \
+# `make test` needs to be run as a non-root user so we create user & group 'openssl' to build with
+    && groupadd -r openssl && useradd -r -m -g openssl openssl \
+    && chown -R openssl:openssl /usr/src/openssl \
+    \
+    && cd /usr/src/openssl \
+    && su openssl -c ' \
+        perl ./Configure linux-x86_64 \
+            enable-ec_nistp_64_gcc_128 \
+        && make \
+        && make test \
+    ' \
+# install openssl as root
+    && cd /usr/src/openssl \
+    && make install_sw install_ssldirs \
+    && ldconfig \
+    \
+# bootstrap with the system CA certificates, a la Homebrew
+    && cp /etc/ssl/certs/*.pem /usr/local/ssl/certs/ \
+    && c_rehash /usr/local/ssl/certs \
+    \
+    && apt-get purge -y --auto-remove $buildDeps \
+    && rm -rf /usr/src/openssl \
+    && userdel -r openssl
+    
 RUN apt-get update \
-    && apt-get install -y \
-       git-core wget ca-certificates \
-    && apt-get install -y libgmp-dev \
-       && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/ \
-       && docker-php-ext-configure gmp \
-       && docker-php-ext-install gmp \
-    && docker-php-ext-install mbstring \
-    && docker-php-ext-install pdo_mysql \
-    && apt-get install -y libxml2-dev \
-       && docker-php-ext-install soap \
-    && apt-get install -y libmcrypt4 libmcrypt-dev \
-       && docker-php-ext-install mcrypt \
-    && apt-get install -y libxslt-dev \
-       && docker-php-ext-install xsl \
-    && apt-get install -y libicu-dev \
-       && docker-php-ext-install intl \
-    && apt-get install -y libpng12-dev libjpeg-dev \
-       && docker-php-ext-configure gd --with-jpeg-dir=/usr/lib \
-       && docker-php-ext-install gd \
-    && apt-get install -y zlib1g-dev \
-       && docker-php-ext-install zip \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get install -y git-core 
 
 # Enable HTTP2 support
 # build nghttp2 (https://hub.docker.com/r/norbertm/debian-curl-http2/)
@@ -110,6 +141,28 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' > /etc/apt/sou
     && rm -rf /var/lib/apt/lists/* 
     
 RUN curl --version
+
+RUN apt-get update \
+    && apt-get install -y libgmp-dev \
+       && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/ \
+       && docker-php-ext-configure gmp \
+       && docker-php-ext-install gmp \
+    && docker-php-ext-install mbstring \
+    && docker-php-ext-install pdo_mysql \
+    && apt-get install -y libxml2-dev \
+       && docker-php-ext-install soap \
+    && apt-get install -y libmcrypt4 libmcrypt-dev \
+       && docker-php-ext-install mcrypt \
+    && apt-get install -y libxslt-dev \
+       && docker-php-ext-install xsl \
+    && apt-get install -y libicu-dev \
+       && docker-php-ext-install intl \
+    && apt-get install -y libpng12-dev libjpeg-dev \
+       && docker-php-ext-configure gd --with-jpeg-dir=/usr/lib \
+       && docker-php-ext-install gd \
+    && apt-get install -y zlib1g-dev \
+       && docker-php-ext-install zip \
+    && rm -rf /var/lib/apt/lists/*
 
 # PHP Configuration
 RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
