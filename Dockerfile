@@ -112,7 +112,10 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' > /etc/apt/sou
     && rm /etc/apt/sources.list.d/deb-src-jessie-main.list \
     && apt-get update \
     && apt-get install -y libssh2-1 --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && ldconfig
+    
+RUN curl --version
 
 # PHP Configuration
 RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
