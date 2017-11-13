@@ -33,8 +33,8 @@ RUN apt-get update \
         zlib1g-dev libcunit1-dev libssl-dev libxml2-dev libev-dev libevent-dev libjansson-dev \
         libjemalloc-dev cython python3-dev python-setuptools \
         --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/* \
-    && wget https://github.com/nghttp2/nghttp2/releases/download/v1.27.0/nghttp2-1.27.0.tar.gz \
+    && rm -rf /var/lib/apt/lists/*
+RUN wget https://github.com/nghttp2/nghttp2/releases/download/v1.27.0/nghttp2-1.27.0.tar.gz \
     && tar -xvzf nghttp2-1.27.0.tar.gz \
     && cd nghttp2-1.27.0 \
     && autoreconf -i \
