@@ -25,6 +25,18 @@ RUN apt-get update \
        && docker-php-ext-install zip \
    && rm -rf /var/lib/apt/lists/*
 
+# Enable HTTP2 support
+RUN apt-get install -y nghttp2 libnghttp2-dev \
+  && wget https://curl.haxx.se/download/curl-7.56.1.tar.bz2 \
+  && tar -xvjf curl-7.56.1.tar.bz2 && cd curl-7.56.1 \
+  && ./configure --with-nghttp2 --prefix=/usr \
+  && make \
+  && make install \
+  && ldconfig \ 
+  && cd .. \
+  && rm -rf curl-7.56.1 curl-7.56.1.tar.bz2 \
+  && rm -rf /var/lib/apt/lists/*
+
 # PHP Configuration
 RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
 RUN echo "date.timezone=UTC" > $PHP_INI_DIR/conf.d/date_timezone.ini
