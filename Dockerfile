@@ -74,7 +74,7 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' > /etc/apt/sou
     && wget https://curl.haxx.se/download/curl-7.56.1.tar.gz \
     && tar -xvzf curl-7.56.1.tar.gz \
     && cd curl-7.56.1 \
-    && ./configure --with-nghttp2=/usr/local \
+    && ./configure --with-nghttp2 --prefix=/usr/local \
         --disable-ldap --disable-sspi --without-librtmp \
         --disable-dict --disable-telnet --disable-tftp --disable-rtsp \
         --disable-pop3 --disable-imap --disable-smtp --disable-gopher --disable-smb \
