@@ -42,12 +42,12 @@ RUN curl -sSLo phpunit.phar https://phar.phpunit.de/phpunit.phar \
     && ln -s /usr/local/bin/phpunit.phar /usr/local/bin/phpunit
 
 # Install PHP Code sniffer
-RUN curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar \
+RUN curl -sSLo phpcs.phar https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar \
     && chmod 755 phpcs.phar \
     && mv phpcs.phar /usr/local/bin/ \
     && ln -s /usr/local/bin/phpcs.phar /usr/local/bin/phpcs \
     
 # Install deployer
-RUN curl -LO https://deployer.org/deployer.phar \
+RUN curl -sSLo deployer.phar https://deployer.org/deployer.phar \
     && mv deployer.phar /usr/local/bin/dep \
     && chmod +x /usr/local/bin/dep
