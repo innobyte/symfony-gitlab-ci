@@ -3,8 +3,8 @@ MAINTAINER Alin Alexandru <alin.alexandru@innobyte.com>
 
 RUN apt-get update -y
 RUN apt-get install -y --no-install-recommends \
-       software-properties-common locales \
-    && locale-gen en_US.UTF-8 && export LANG=en_US.UTF-8 && \
+        software-properties-common locales \
+    && locale-gen en_US.UTF-8 && export LANG=en_US.UTF-8 \
     && add-apt-repository -y ppa:ondrej/php \
     && apt-get update -y \
     && apt-get install -y --no-install-recommends \
