@@ -22,8 +22,10 @@ RUN apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # PHP Configuration
-RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
-RUN echo "date.timezone=UTC" > $PHP_INI_DIR/conf.d/date_timezone.ini
+ENV $PHP_INI_DIR /etc/php/7.1/cli
+
+RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/99-memory-limit.ini
+RUN echo "date.timezone=UTC" > $PHP_INI_DIR/conf.d/99-date_timezone.ini
 
 # Install composer and put binary into $PATH
 RUN curl -sS https://getcomposer.org/installer | php \
