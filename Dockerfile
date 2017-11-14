@@ -9,7 +9,7 @@ RUN apt-get install -y --no-install-recommends \
     && apt-get update -y \
     && apt-get install -y --no-install-recommends \
         wget ca-certificates g++ make nghttp2 libnghttp2-dev libssl-dev git-core ssh \
-        php7.1-cli php7.1-curl php7.1-common php7.1-intl php7.1-mbstring \
+        php7.1-cli php7.1-curl php7.1-common php7.1-intl php7.1-mbstring php7.1-apcu \
         php7.1-zip php7.1-opcache php7.1-json php7.1-xml php7.1-mysql php7.1-gmp \
     && wget https://curl.haxx.se/download/curl-7.56.1.tar.bz2 \
     && tar -xvjf curl-7.56.1.tar.bz2 && cd curl-7.56.1 \
