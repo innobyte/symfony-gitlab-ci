@@ -1,7 +1,8 @@
 FROM ubuntu:16.04
 MAINTAINER Alin Alexandru <alin.alexandru@innobyte.com>
 
-RUN apt-get install -y --no-install-recommends software-properties-common \
+RUN apt-get update -y \
+    && apt-get install -y --no-install-recommends python-properties-common \
     && add-apt-repository -y ppa:ondrej/php \
     && apt-get update -y \
     && apt-get install -y --no-install-recommends \
@@ -15,7 +16,7 @@ RUN apt-get install -y --no-install-recommends software-properties-common \
     && cd .. && rm -rf curl-7.56.1.tar.bz2 curl-7.56.1 \
     # Cleanup
     && apt-get remove --purge -yq \
-        software-properties-common \
+        python-properties-common \
     && rm -rf /var/lib/apt/lists/*
 
 # PHP Configuration
