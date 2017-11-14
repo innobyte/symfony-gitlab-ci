@@ -18,7 +18,7 @@ RUN apt-get install -y --no-install-recommends \
     && cd .. && rm -rf curl-7.56.1.tar.bz2 curl-7.56.1 \
     # Cleanup
     && apt-get remove --purge -yq \
-        python-properties-common \
+        software-properties-common g++ make \
     && rm -rf /var/lib/apt/lists/*
 
 # PHP Configuration
