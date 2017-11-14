@@ -21,6 +21,9 @@ RUN apt-get install -y --no-install-recommends \
         software-properties-common g++ make \
     && rm -rf /var/lib/apt/lists/*
 
+RUN curl --version
+
+
 # PHP Configuration
 ENV PHP_INI_DIR /etc/php/7.1/cli
 
