@@ -22,7 +22,7 @@ RUN apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # PHP Configuration
-ENV $PHP_INI_DIR /etc/php/7.1/cli
+ENV PHP_INI_DIR /etc/php/7.1/cli
 
 RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/99-memory-limit.ini
 RUN echo "date.timezone=UTC" > $PHP_INI_DIR/conf.d/99-date_timezone.ini
