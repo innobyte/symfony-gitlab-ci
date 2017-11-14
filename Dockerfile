@@ -1,9 +1,9 @@
 FROM ubuntu:16.04
 MAINTAINER Alin Alexandru <alin.alexandru@innobyte.com>
 
-RUN apt-get install -y python-software-properties \
-    && add-apt-repository -y ppa:ondrej/php \
-    && apt-get update -y \
+RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main" > /etc/apt/sources.list.d/ondrej-ubuntu-php-xenial.list
+
+RUN apt-get update -y \
     && apt-get install -y --no-install-recommends \
         wget ca-certificates nghttp2 libnghttp2-dev \
         php7.1-cli php7.1-curl php7.1-common php7.1-intl php7.1-mbstring \
