@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 MAINTAINER Alin Alexandru <alin.alexandru@innobyte.com>
 
 RUN apt-get install -y --no-install-recommends software-properties-common
-    && add-apt-repository -y ppa:ondrej/php
+    && add-apt-repository -y ppa:ondrej/php \
     && apt-get update -y \
     && apt-get install -y --no-install-recommends \
         wget ca-certificates nghttp2 libnghttp2-dev \
