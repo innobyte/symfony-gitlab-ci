@@ -17,8 +17,7 @@ RUN apt-get install -y --no-install-recommends \
     && make && make install && ldconfig \
     && cd .. && rm -rf curl-7.56.1.tar.bz2 curl-7.56.1 \
     # Cleanup
-    && apt-get remove --purge -yq \
-        software-properties-common g++ make \
+    && apt-get autoremove -yq \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl --version
