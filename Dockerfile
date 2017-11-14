@@ -2,8 +2,8 @@ FROM ubuntu:16.04
 MAINTAINER Alin Alexandru <alin.alexandru@innobyte.com>
 
 RUN apt-get update -y
-RUN apt-get install -y --no-install-recommends python-software-properties \
-    && add-apt-repository -y ppa:ondrej/php \
+RUN apt-get install -y --no-install-recommends python-software-properties
+RUN add-apt-repository -y ppa:ondrej/php \
     && apt-get update -y \
     && apt-get install -y --no-install-recommends \
         wget ca-certificates nghttp2 libnghttp2-dev \
