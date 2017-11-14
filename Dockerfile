@@ -1,11 +1,11 @@
 FROM ubuntu:16.04
 MAINTAINER Alin Alexandru <alin.alexandru@innobyte.com>
 
-ADD ondrej-ubuntu-php-xenial.list /etc/apt/sources.list.d/
-
-RUN apt-get update -y \
+RUN apt-get install -y python-software-properties \
+    && add-apt-repository -y ppa:ondrej/php \
+    && apt-get update -y \
     && apt-get install -y --no-install-recommends \
-        wget nghttp2 libnghttp2-dev \
+        wget ca-certificates nghttp2 libnghttp2-dev \
         php7.1-cli php7.1-curl php7.1-common php7.1-intl php7.1-mbstring \
         php7.1-zip php7.1-opcache php7.1-json php7.1-xml php7.1-mysql php7.1-gmp \
     && wget https://curl.haxx.se/download/curl-7.56.1.tar.bz2 \
